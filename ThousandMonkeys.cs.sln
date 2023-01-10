@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33103.184
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThousandMonkeys.cs", "ThousandMonkeys.cs.csproj", "{1C2F65FF-7955-46E9-B615-9D9749E11938}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1C2F65FF-7955-46E9-B615-9D9749E11938}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C2F65FF-7955-46E9-B615-9D9749E11938}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C2F65FF-7955-46E9-B615-9D9749E11938}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C2F65FF-7955-46E9-B615-9D9749E11938}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {07E7D935-87C9-462F-A9F5-5388DE20652A}
+	EndGlobalSection
+EndGlobal
