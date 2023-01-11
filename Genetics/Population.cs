@@ -29,12 +29,12 @@ namespace ThousandMonkeys.cs.Genetics
 
         public List<Dna> Init()
         {
-            CurrentPopulation = new List<Dna>();
+            List<Dna> population = new List<Dna>();
             for (int i = 0; i < MaxPopulation; i++)
             {
-                CurrentPopulation.Add(new Dna(Target.Length));
+                if (Target is not null) population.Add(new Dna(Target.Length));
             }
-            return CurrentPopulation;
+            return population;
         }
 
         #endregion
@@ -42,53 +42,71 @@ namespace ThousandMonkeys.cs.Genetics
         #region Methods
         public void CalculateFitness()
         {
-            CurrentPopulation?.ForEach(
-                dna => dna.CalculateFitness(Target)
-                );
+            for (int i = 0; i < CurrentPopulation?.Count; i++)
+            {
+                if (Target is not null) CurrentPopulation[i].CalculateFitness(Target);
+            }
         }
 
         public void NaturalSelection()
         {
             DarwinPool = new List<Dna>();
             int maxFitness = GetMaxFitness();
-
-            CurrentPopulation?.ForEach(dna =>
+            for (int i = 0; i < CurrentPopulation?.Count; i++)
             {
-                double fitness = dna.Fitness / maxFitness;
-                int length = dna.Fitness * 100;
-                for (int i = 0; i < length; i++)
+                int fitnessNormal = (int)Math.Floor((double)(CurrentPopulation[i].Fitness / maxFitness) * 100);
+                for (int j = 0; j < fitnessNormal; j++)
                 {
-                    DarwinPool.Add(dna);
+                    DarwinPool.Add(CurrentPopulation[i]);
                 }
-            });
-
+            }
         }
 
         public int GetMaxFitness()
         {
-            return CurrentPopulation.Max(dna => dna.Fitness);
-        }
-
-        public string ShowPool()
-        {
-            string data = $"";
-            DarwinPool?.ForEach(dna =>
+            int max = 0;
+            if (CurrentPopulation is not null)
             {
-                data = data + dna.Show();
-            });
-            return data;
+                CurrentPopulation.Max(dna => dna.Fitness);
+            }
+            return max;
         }
 
-        public string Show()
+        public string GetShow()
         {
-            string data = $"";
+            string data = "";
             CurrentPopulation?.ForEach(dna =>
             {
-                data = data + dna.Show() + "\n";
+                data = data + $"{dna.Show()} \n";
             });
             return data;
         }
 
+        public string GetShowPool()
+        {
+            string data = "";
+            DarwinPool?.ForEach(dna =>
+            {
+                data = data + $"{dna.Show()} \n";
+            });
+            return data;
+        }
+
+        public void ShowPool()
+        {
+            DarwinPool?.ForEach(dna =>
+            {
+                Console.WriteLine($"{dna.Show()} \n");
+            });
+        }
+
+        public void Show()
+        {
+            CurrentPopulation?.ForEach(dna =>
+            {
+                Console.WriteLine($"{dna.Show()} \n");
+            });
+        }
         #endregion
 
     }

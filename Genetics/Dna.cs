@@ -10,6 +10,7 @@
         public Dna(int size)
         {
             Size = size;
+            Fitness = 0;
             Init();
         }
         #endregion
@@ -18,7 +19,6 @@
         public List<string> Init()
         {
             Genes = new List<string>();
-            Fitness = 0;
             for (int i = 0; i < Size; i++)
             {
                 Genes.Add(GetRandomCharacter());
@@ -28,20 +28,20 @@
 
         public void CalculateFitness(string Target)
         {
-            int fitness = 0;
-            for (int i = 0; i < Genes?.Count(); i++)
+            int score = 0;
+            for (int i = 0; i < Genes?.Count; i++)
             {
-                if (Genes[i].Equals(Target[i]))
+                if (Genes[i] == Target[i].ToString())
                 {
-                    fitness++;
+                    score++;
                 }
             }
-            Fitness = fitness;
+            Fitness = score;
         }
 
         public string Show()
         {
-            return $" GEN: [  {string.Join(" || ", Genes)}  ] , {Fitness} ";
+            return $" GEN: [  {string.Join(" || ", Genes)}  ] , FITNESS: {Fitness} ";
         }
         #endregion
 
