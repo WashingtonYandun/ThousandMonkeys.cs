@@ -26,7 +26,10 @@ namespace ThousandMonkeys.cs.Genetics
             MaxPopulation = maxPopulation;
             CurrentPopulation = Init();
         }
+        #endregion
 
+
+        #region Methods
         public List<Dna> Init()
         {
             List<Dna> population = new List<Dna>();
@@ -37,51 +40,54 @@ namespace ThousandMonkeys.cs.Genetics
             return population;
         }
 
-        #endregion
-
-        #region Methods
         public void CalculateFitness()
         {
-            for (int i = 0; i < CurrentPopulation?.Count; i++)
+            CurrentPopulation?.ForEach(dna =>
             {
-                if (Target is not null) CurrentPopulation[i].CalculateFitness(Target);
-            }
+                if (Target is not null)
+                {
+                    dna.CalculateFitness(Target);
+                }
+            });
         }
 
         public void NaturalSelection()
         {
             DarwinPool = new List<Dna>();
             int maxFitness = GetMaxFitness();
-            for (int i = 0; i < CurrentPopulation?.Count; i++)
+
+            CurrentPopulation?.ForEach(dna =>
             {
-                int fitnessNormal = (int)Math.Floor((double)(CurrentPopulation[i].Fitness / maxFitness) * 100);
-                for (int j = 0; j < fitnessNormal; j++)
+                double fitness = dna.Fitness / maxFitness;
+                int length = dna.Fitness * 100;
+                for (int i = 0; i < length; i++)
                 {
-                    DarwinPool.Add(CurrentPopulation[i]);
+                    DarwinPool.Add(dna);
                 }
-            }
+            });
+        }
+
+        public void Generate()
+        {
+
         }
 
         public int GetMaxFitness()
         {
-            int max = 0;
-            if (CurrentPopulation is not null)
-            {
-                CurrentPopulation.Max(dna => dna.Fitness);
-            }
-            return max;
-        }
-
-        public string GetShow()
-        {
-            string data = "";
+            int maxFitness = 0;
             CurrentPopulation?.ForEach(dna =>
             {
-                data = data + $"{dna.Show()} \n";
+                if (dna.Fitness > maxFitness)
+                {
+                    maxFitness = dna.Fitness;
+                }
             });
-            return data;
+            return maxFitness;
         }
+        #endregion
 
+
+        #region ShowMethods
         public string GetShowPool()
         {
             string data = "";
@@ -99,6 +105,15 @@ namespace ThousandMonkeys.cs.Genetics
                 Console.WriteLine($"{dna.Show()} \n");
             });
         }
+        public string GetShow()
+        {
+            string data = "";
+            CurrentPopulation?.ForEach(dna =>
+            {
+                data = data + $"{dna.Show()} \n";
+            });
+            return data;
+        }
 
         public void Show()
         {
@@ -107,7 +122,7 @@ namespace ThousandMonkeys.cs.Genetics
                 Console.WriteLine($"{dna.Show()} \n");
             });
         }
-        #endregion
 
+        #endregion
     }
 }
