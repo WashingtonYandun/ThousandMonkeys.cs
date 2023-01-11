@@ -35,7 +35,10 @@ namespace ThousandMonkeys.cs.Genetics
             List<Dna> population = new List<Dna>();
             for (int i = 0; i < MaxPopulation; i++)
             {
-                if (Target is not null) population.Add(new Dna(Target.Length));
+                if (Target is not null)
+                {
+                    population.Add(new Dna(Target.Length));
+                }
             }
             return population;
         }
@@ -53,23 +56,48 @@ namespace ThousandMonkeys.cs.Genetics
 
         public void NaturalSelection()
         {
-            DarwinPool = new List<Dna>();
-            int maxFitness = GetMaxFitness();
+            //DarwinPool = new List<Dna>();
+            //int maxFitness = GetMaxFitness();
 
-            CurrentPopulation?.ForEach(dna =>
-            {
-                double fitness = dna.Fitness / maxFitness;
-                int length = dna.Fitness * 100;
-                for (int i = 0; i < length; i++)
-                {
-                    DarwinPool.Add(dna);
-                }
-            });
+            //CurrentPopulation?.ForEach(dna =>
+            //{
+            //    double fitness = dna.Fitness / 16;
+            //    int length = dna.Fitness * 100;
+            //    for (int i = 0; i < length; i++)
+            //    {
+            //        DarwinPool.Add(dna);
+            //    }
+            //});
         }
 
-        public void Generate()
+        public void Reproduction()
         {
+            Random rnd = new Random();
+            for (int i = 0; i < CurrentPopulation?.Count; i++)
+            {
+                int indexA = rnd.Next(0, DarwinPool.Count - 1);
+                int indexB = rnd.Next(0, DarwinPool.Count - 1);
+                Dna dnaA = DarwinPool[indexA];
+                Dna dnaB = DarwinPool[indexB];
 
+                Dna childDna = dnaA.Crossover(dnaB);
+                childDna.Mutate(MutationRate);
+                CurrentPopulation[i] = childDna;
+            }
+            Generations++;
+        }
+
+        public void Evaluate()
+        {
+            int maxFitness = 0;
+            CurrentPopulation?.ForEach(dna =>
+            {
+                if (dna.Fitness > maxFitness)
+                {
+                    maxFitness = dna.Fitness;
+                    Best = string.Join("", dna.Genes);
+                }
+            });
         }
 
         public int GetMaxFitness()

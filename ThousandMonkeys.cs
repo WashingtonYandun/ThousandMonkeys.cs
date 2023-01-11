@@ -11,11 +11,19 @@ namespace ThousandMonkeys.cs
     {
         static void Main(string[] args)
         {
-            Population population = new Population("Washington.Yandun", 0.2, 10);
-            population.CalculateFitness();
-            population.NaturalSelection();
-            Console.WriteLine(population.GetMaxFitness());
-            population.Generate();
+            Population population = new Population("Washington.Yandun", 0.5, 10);
+
+            //while (population.Best != population.Target)
+            //{
+            //    population.CalculateFitness();
+            //    population.NaturalSelection();
+            //    population.Reproduction();
+            //    population.Evaluate();
+            //    Console.WriteLine(population.Best);
+            //}
+            
+            
+
             //population.Evaluate();
         }
     }
