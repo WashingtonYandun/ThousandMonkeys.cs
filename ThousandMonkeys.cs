@@ -11,20 +11,24 @@ namespace ThousandMonkeys.cs
     {
         static void Main(string[] args)
         {
-            Population population = new Population("Washington.Yandun", 0.5, 10);
+            Console.WriteLine("Target reached!");
+            string target = "HELLO"; // El objetivo es encontrar esta cadena
+            double mutationRate = 0.01; // Tasa de mutación
+            long maxPopulation = 10; // Tamaño máximo de la población
 
-            //while (population.Best != population.Target)
-            //{
-            //    population.CalculateFitness();
-            //    population.NaturalSelection();
-            //    population.Reproduction();
-            //    population.Evaluate();
-            //    Console.WriteLine(population.Best);
-            //}
-            
-            
+            Population population = new Population(target, mutationRate, maxPopulation);
 
-            //population.Evaluate();
+            while (population.GetMaxFitness() < target.Length)
+            {
+                population.CalculateFitness();
+                population.NaturalSelection();
+                population.Reproduction();
+                population.Evaluate();
+
+                Console.WriteLine($"Generation: {population.Generations} - Best: {population.Best}");
+            }
+
+            Console.WriteLine("Target reached!");
         }
     }
 }
